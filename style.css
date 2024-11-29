@@ -1,0 +1,143 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F2F2F2;
+}
+
+header {
+    background-color: #FFF;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header img {
+    height: 70px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+.login-button {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.login-button:hover {
+    background-color: #333;
+}
+
+main {
+    padding: 20px;
+}
+
+.doctors {
+    text-align: center;
+    margin: 50px;
+}
+
+.doctor-card {
+    background-color: #fff;
+    border: 2px solid #008000;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    display: inline-block;
+    width: 200px;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+}
+
+.doctor-card img {
+    width: 120px; 
+    height: 120px;
+    border-radius: 10%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.doctor-card h3 {
+    color: #000;
+}
+
+.doctor-card p {
+    color: #000;
+}
+
+.hubungi-dokter {
+    display: inline-block;
+    background-color: #008000;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.hubungi-dokter:hover {
+    background-color: #336633;
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+  .doctor-card {
+    width: 100%;
+  }
+}
+
+footer {
+    background-color: #fefcfd; /* Light pink background */
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-logo {
+    margin-bottom: 5px;
+  }
+  
+  .footer-nav {
+    margin-bottom: 10px;
+  }
+  
+  .footer-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+  }
+  
+  .footer-nav li {
+    margin: 0 10px;
+  }
+  
+  .footer-nav a {
+    text-decoration: none;
+    color: #23465e;
+  }
