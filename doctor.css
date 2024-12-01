@@ -1,0 +1,271 @@
+.container {
+  margin: 0 auto; /* Untuk memusatkan konten */
+  max-width: 1200px; /* Lebar maksimum container */
+  padding: 0 20px; /* Tambahkan padding untuk memberikan jarak horizontal */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+header {
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header img {
+    height: 70px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 300px;
+}
+
+.logo span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #38A9AD;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribusi elemen */
+  padding: 30px 30px;
+  margin: 0 20px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  justify-content: center; /* Pusatkan elemen */
+  align-items: center; /* Rata vertikal */
+  gap: 80px; /* Jarak antar elemen */
+  flex-grow: 1; /* Membuat elemen ini mengambil ruang kosong di navbar */
+  margin: 0; /* Hilangkan margin default */
+  padding: 0; /* Hilangkan padding default */
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #8be8ec;
+}
+
+.login-btn {
+  padding: 12px 32px;
+  background: #333;
+  color: #ffffff;
+  border: none;
+  border-radius: 32px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  -ms-border-radius: 32px;
+  -o-border-radius: 32px;
+}
+
+.login-btn:hover {
+  background: #555;
+}
+
+main {
+    padding: 20px;
+}
+
+.doctors {
+    text-align: center;
+    margin: 50px;
+}
+
+.doctor-card {
+    background-color: #fff;
+    border: 2px solid #008000;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    display: inline-block;
+    width: 200px;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+}
+
+.doctor-card img {
+    width: 120px; 
+    height: 120px;
+    border-radius: 10%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.doctor-card h3 {
+    color: #000;
+}
+
+.doctor-card p {
+    color: #000;
+}
+
+.hubungi-dokter {
+    display: inline-block;
+    background-color: #008000;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.hubungi-dokter:hover {
+    background-color: #336633;
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+  .doctor-card {
+    width: 100%;
+  }
+}
+
+.doctor {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .doctor h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .doctor p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color:#f2f2f2;
+  }
+  
+footer {
+    background-color: #fefcfd; 
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f1e5e5eb;
+  }
+  
+  h2, h3, p {
+    color: #333333;
+  }
+  
+  .doctor-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  
+  .doctor-card-detail {
+    display: flex;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .doctor-card-detail img {
+    width: 50%;
+    object-fit: cover;
+  }
+  
+  .doctor-info {
+    padding: 20px;
+  }
+  
+  .doctor-info h2 {
+    margin-bottom: 10px;
+  }
+  
+  .doctor-info p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-logo {
+    margin-bottom: 5px;
+  }
+  
+  .footer-nav {
+    margin-bottom: 10px;
+  }
+  
+  .footer-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+  }
+  
+  .footer-nav li {
+    margin: 0 10px;
+  }
+  
+  .footer-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  
