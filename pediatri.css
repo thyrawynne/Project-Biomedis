@@ -1,0 +1,184 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+header {
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribusi elemen */
+    padding: 30px 30px;
+    margin: 0 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 300px;
+}
+
+.logo span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #38A9AD;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: center; /* Pusatkan elemen */
+    align-items: center; /* Rata vertikal */
+    gap: 80px; /* Jarak antar elemen */
+    flex-grow: 1; /* Membuat elemen ini mengambil ruang kosong di navbar */
+    margin: 0; /* Hilangkan margin default */
+    padding: 0; /* Hilangkan padding default */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #38A9AD;
+}
+
+.login-btn {
+    padding: 12px 32px;
+    background: #333;
+    color: #ffffff;
+    border: none;
+    border-radius: 32px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -ms-border-radius: 32px;
+    -o-border-radius: 32px;
+}
+
+.login-btn:hover {
+    background: #555;
+}
+
+/* Main Content */
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+  
+  h1, h2 {
+    color: #000000;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+  
+  ul li {
+    margin: 10px 0;
+  }
+  
+  ul li strong {
+    font-weight: bold;
+  }
+  
+  /* Menambahkan jarak antara <p> dan <h2> */
+  p {
+    margin-bottom: 30px; /* Menambahkan jarak bawah untuk <p> */
+  }
+  
+  h2 {
+    margin-top: 20px; /* Menambahkan jarak atas untuk <h2> */
+  }
+  
+
+/* Center the content */
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Horizontally center */
+  justify-content: center; /* Vertically center */
+  text-align: center; /* Center text */
+}
+
+h1, h2 {
+  color: #000000;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+ul li {
+  margin: 10px 0;
+}
+
+ul li strong {
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    background-color: #f5f5f5;
+    padding: 60px 20px; /* Perbesar padding atas-bawah */
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo {
+    width: 60px;
+    height: auto;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+}
+
+.footer-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+    color: #38A9AD;
+}
+
+.footer p {
+    font-size: 0.9rem;
+    color: #777;
+}
