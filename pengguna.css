@@ -1,3 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
 header {
   background: #ffffff;
   position: sticky;
@@ -5,8 +17,12 @@ header {
   z-index: 1000;
 }
 
-header img {
-    height: 70px;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribusi elemen */
+  padding: 30px 30px;
+  margin: 0 20px;
 }
 
 .logo {
@@ -19,29 +35,10 @@ header img {
   width: 300px;
 }
 
-.logo span {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #38A9AD;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Distribusi elemen */
-  padding: 30px 30px;
-  margin: 0 20px;
-}
-
 .nav-links {
   list-style: none;
   display: flex;
-  justify-content: center; /* Pusatkan elemen */
-  align-items: center; /* Rata vertikal */
-  gap: 80px; /* Jarak antar elemen */
-  flex-grow: 1; /* Membuat elemen ini mengambil ruang kosong di navbar */
-  margin: 0; /* Hilangkan margin default */
-  padding: 0; /* Hilangkan padding default */
+  gap: 80px; 
 }
 
 .nav-links li a {
@@ -52,7 +49,7 @@ header img {
 }
 
 .nav-links li a:hover {
-  color: #8be8ec;
+  color: #38A9AD;
 }
 
 .user-btn {
@@ -63,97 +60,130 @@ header img {
   border-radius: 32px;
   cursor: pointer;
   transition: background 0.3s ease;
-  -webkit-border-radius: 32px;
-  -moz-border-radius: 32px;
-  -ms-border-radius: 32px;
-  -o-border-radius: 32px;
 }
 
 .user-btn:hover {
   background: #555;
 }
 
-.pengguna-hero {
-    background-color: #f5f5f5;
-    padding: 30px;
-    text-align: center;
-  }
-  
-  .profile-container {
-    display: flex;
-    align-items: center;
-    margin: 30px;
-  }
-  
-  .profile-image img {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-  }
-  
-  .profile-info {
-    margin-left: 20px;
-  }
-  
-  .edit-btn {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .edit-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .activity-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-  }
-  
-  .activity-table th, .activity-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .activity-table th {
-    background-color: #f4f4f4;
-  }
+.hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
-  .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .footer-logo {
-    margin-bottom: 5px;
-  }
-  
-  .footer-nav {
-    margin-bottom: 10px;
-  }
-  
-  .footer-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-  }
-  
-  .footer-nav li {
-    margin: 0 10px;
-  }
-  
-  .footer-nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
+.hero-content p {
+  font-size: 1.2rem;
+}
+
+.profile-section {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin-right: 30px;
+}
+
+.edit-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.activity-section {
+  padding: 40px 20px;
+}
+
+.activity-section h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.activity-table th,
+.activity-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.activity-table th {
+  background-color: #f8f8f8;
+  font-size: 1.1rem;
+}
+
+.activity-table td {
+  font-size: 1rem;
+}
+
+.activity-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.footer {
+  background-color: #f5f5f5;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-logo {
+  width: 60px;
+  height: auto;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+}
+
+.footer-links li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+  color: #38A9AD;
+}
+
+.footer p {
+  font-size: 0.9rem;
+  color: #777;
+}
