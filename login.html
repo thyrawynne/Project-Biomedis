@@ -19,16 +19,16 @@
         <p>Please enter your username and password</p>
       </div>
 
-      <form class="login-form">
+      <form class="login-form" onsubmit="handleLogin(event)">
         <label for="username">Username</label>
         <div class="input-container">
-          <input type="text" id="username" placeholder="Enter your username" />
+          <input type="text" id="username" placeholder="Enter your username" required />
           <div class="underline"></div>
         </div>
 
         <label for="password">Password</label>
         <div class="input-container">
-          <input type="password" id="password" placeholder="Enter your password" />
+          <input type="password" id="password" placeholder="Enter your password" required />
           <div class="underline"></div>
         </div>
 
@@ -36,9 +36,11 @@
       </form>
 
       <div class="visuals">
-        <img src="./assets/hospital.png" alt="Hospital" class="hospital" />
-        <img src="./assets/family.png" alt="Family" class="family" />
+        <img src="./assets/family at hospital.webp" alt="Family" class="family" />
       </div>
     </div>
+
+    <!-- Menyertakan file login.js -->
+    <script src="login.js"></script>
   </body>
 </html>

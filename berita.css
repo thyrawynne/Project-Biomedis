@@ -72,7 +72,7 @@
     color: #38A9AD;
   }
   
-  .login-btn {
+  .user-btn {
     padding: 12px 32px;
     background: #333;
     color: #ffffff;
@@ -86,7 +86,7 @@
     -o-border-radius: 32px;
 }
   
-  .login-btn:hover {
+  .user-btn:hover {
     background: #555;
   }
 

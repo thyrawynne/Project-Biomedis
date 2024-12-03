@@ -67,7 +67,7 @@ header img {
   color: #8be8ec;
 }
 
-.login-btn {
+.user-btn {
   padding: 12px 32px;
   background: #333;
   color: #ffffff;
@@ -81,7 +81,7 @@ header img {
   -o-border-radius: 32px;
 }
 
-.login-btn:hover {
+.user-btn:hover {
   background: #555;
 }
 
@@ -182,7 +182,7 @@ footer {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f1e5e5eb;
+    background-color: #ffffffeb;
   }
   
   h2, h3, p {
