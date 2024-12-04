@@ -1,34 +1,41 @@
 <?php
-// Menghubungkan ke database
-$host = 'localhost';
-$db = 'informatika_medis';  // Ganti dengan nama database Anda
-$user = 'root';             // Ganti dengan username database Anda
-$pass = '';                 // Ganti dengan password database Anda
+// Koneksi ke database
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "informatika_medis";
 
-// Membuat koneksi
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = new mysqli($host, $username, $password, $dbname);
 
-// Mengecek koneksi
+// Cek koneksi
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Memastikan ID dokter diterima dalam URL
-if (isset($_GET['id'])) {
-    $id_dokter = $_GET['id'];
-    // Query untuk mengambil data detail dokter berdasarkan id_dokter
-    $sql = "SELECT * FROM dokter WHERE id_dokter = $id_dokter";
-    $result = $conn->query($sql);
+// Cek apakah parameter ID dokter tersedia
+if (!isset($_GET['id'])) {
+    die("ID dokter tidak ditemukan.");
+}
 
-    if ($result->num_rows > 0) {
-        $doctor = $result->fetch_assoc();
-    } else {
-        echo "Dokter tidak ditemukan.";
-        exit;
-    }
+$id_dokter = intval($_GET['id']);
+
+// Query untuk mendapatkan detail dokter
+$query_dokter = "SELECT * FROM dokter WHERE id_dokter = $id_dokter";
+$result_dokter = $conn->query($query_dokter);
+
+// Jika data dokter ditemukan
+if ($result_dokter->num_rows > 0) {
+    $dokter = $result_dokter->fetch_assoc();
+    $nama_dokter = $dokter['nama_dokter'];
+    $spesialisasi = $dokter['spesialisasi'];
+    $gambar = $dokter['gambar'];
+    $no_wa = $dokter['no_wa'];
+
+    // Query untuk mendapatkan jadwal dokter berdasarkan id_dokter
+    $query_jadwal = "SELECT * FROM jadwal_dokter WHERE id_dokter = $id_dokter ORDER BY hari";
+    $result_jadwal = $conn->query($query_jadwal);
 } else {
-    echo "ID dokter tidak ditemukan.";
-    exit;
+    die("Dokter tidak ditemukan.");
 }
 ?>
 
@@ -37,46 +44,65 @@ if (isset($_GET['id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEDIVA - Detail Dokter</title>
-  <link rel="stylesheet" href="doctor-detail.css">
+  <title>Detail Dokter - <?php echo htmlspecialchars($nama_dokter); ?></title>
+  <link rel="stylesheet" href="doctor.css">
 </head>
 <body>
   <header>
     <nav class="navbar">
       <div class="logo">
-        <a href="index.php">
+        <a href="index.html">
           <img src="assets/logo.png" alt="MEDIVA Logo">
         </a>
       </div>
       <ul class="nav-links">
-        <li><a href="index.php">Home</a></li>
-        <li><a href="berita.php">Berita</a></li>
-        <li><a href="doctor.php">Dokter</a></li>
-        <li><a href="layanan.php">Layanan</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="berita.html">Berita</a></li>
+        <li><a href="doctor.php" class="active">Dokter</a></li>
+        <li><a href="layanan.html">Layanan</a></li>
       </ul>
-      <a href="pengguna.php" class="user-btn">Pengguna</a>
+      <a href="pengguna.html" class="user-btn">Pengguna</a>
     </nav>
   </header>
+
   <main>
     <section class="doctor-detail">
-        <div class="container">
-            <h2><?php echo $doctor['nama_dokter']; ?></h2>
-            <div class="doctor-info">
-                <img src="assets/<?php echo $doctor['gambar']; ?>" alt="<?php echo $doctor['nama_dokter']; ?>">
-                <div class="doctor-bio">
-                    <p><strong>Spesialisasi:</strong> <?php echo $doctor['spesialisasi']; ?></p>
-                    <p><strong>No. WA:</strong> <?php echo $doctor['no_wa']; ?></p>
-                    <p><strong>Poliklinik:</strong> <?php echo $doctor['id_poli']; ?> </p>
-                    <a href="hubungi-dokter.php?id=<?php echo $doctor['id_dokter']; ?>" class="contact-btn">Hubungi Dokter</a>
-                </div>
-            </div>
+      <div class="doctor-card-detail">
+        <img src="assets/<?php echo htmlspecialchars($gambar); ?>" alt="<?php echo htmlspecialchars($nama_dokter); ?>">
+        <div class="doctor-info">
+          <h2><?php echo htmlspecialchars($nama_dokter); ?></h2>
+          <p><?php echo htmlspecialchars($spesialisasi); ?></p>
+          <table>
+            <tr>
+              <th>No</th>
+              <th>Hari</th>
+              <th>Jam</th>
+            </tr>
+            <?php
+            if ($result_jadwal->num_rows > 0) {
+                $no = 1;
+                while ($jadwal = $result_jadwal->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $no++ . "</td>";
+                    echo "<td>" . htmlspecialchars($jadwal['hari']) . "</td>";
+                    echo "<td>" . htmlspecialchars($jadwal['jam']) . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='3'>Jadwal tidak tersedia.</td></tr>";
+            }
+            ?>
+          </table>
+          <a href="https://wa.me/<?php echo htmlspecialchars($no_wa); ?>" class="hubungi-dokter">Hubungi Dokter</a>
         </div>
+      </div>
     </section>
   </main>
+
   <footer>
     <div class="footer-container">
       <div class="footer-logo">
-        <img src="logo1.png" alt="Mediva Logo">
+        <img src="assets/logo1.png" alt="Mediva Logo">
       </div>
       <div class="footer-nav">
         <ul>
@@ -95,6 +121,6 @@ if (isset($_GET['id'])) {
 </html>
 
 <?php
-// Menutup koneksi
+// Tutup koneksi
 $conn->close();
 ?>
