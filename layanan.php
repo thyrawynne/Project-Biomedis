@@ -13,8 +13,8 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-// Query untuk mengambil data layanan dari tabel 'poli'
-$query = "SELECT * FROM poli";
+// Query untuk mengambil data dari tabel 'poli'
+$query = "SELECT * FROM poli";  // Sesuaikan dengan nama tabel Anda
 $result = $conn->query($query);
 ?>
 
@@ -53,18 +53,21 @@ $result = $conn->query($query);
       <p>Discover the wide range of health services we offer to cater to your needs.</p>
       <div class="service-cards">
         <?php
-        // Cek apakah ada data layanan di database
+        // Menampilkan data poli dalam bentuk kartu layanan
         if ($result->num_rows > 0) {
-          // Menampilkan setiap layanan
-          while($row = $result->fetch_assoc()) {
-            // Menampilkan setiap layanan dalam format kartu
-            echo '<a href="' . $row['link'] . '" class="service-card">';
-            echo '<img src="assets/' . $row['image'] . '" alt="' . $row['name'] . ' Icon">';  // Ganti 'image' dan 'name' dengan nama kolom yang ada di tabel
-            echo '<h3>' . $row['name'] . '</h3>';  // Ganti 'name' dengan nama kolom yang ada di tabel
-            echo '</a>';
+          while ($row = $result->fetch_assoc()) {
+            // Ambil nama dan deskripsi dari setiap poli
+            $nama_poli = $row['nama_poli'];
+            $deskripsi_poli = $row['deskripsi_poli'];
+            ?>
+            <a href="poli_detail.php?id=<?php echo $row['id_poli']; ?>" class="service-card">
+              <h3><?php echo $nama_poli; ?></h3>
+              <p><?php echo $deskripsi_poli; ?></p>
+            </a>
+            <?php
           }
         } else {
-          echo '<p>No services available at the moment.</p>';
+          echo "<p>No services available at the moment.</p>";
         }
         ?>
       </div>      
@@ -88,6 +91,6 @@ $result = $conn->query($query);
 </html>
 
 <?php
-// Menutup koneksi database
+// Menutup koneksi ke database
 $conn->close();
 ?>
