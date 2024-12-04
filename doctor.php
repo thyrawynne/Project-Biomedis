@@ -54,7 +54,7 @@ $result = $conn->query($sql);
                     while ($doctor = $result->fetch_assoc()) {
                         echo '<div class="doctor-card">';
                         echo '<img src="assets/' . $doctor['gambar'] . '" alt="' . $doctor['nama_dokter'] . '">';
-                        echo '<h3><a href="doctor-detail.php?id=' . $doctor['id_dokter'] . '">' . $doctor['nama_dokter'] . '</a></h3>';
+                        echo '<h5><a href="doctor-detail.php?id=' . $doctor['id_dokter'] . '">' . $doctor['nama_dokter'] . '</a></h5>';
                         echo '<p>' . $doctor['spesialisasi'] . '</p>';
                         echo '<a href="hubungi-dokter.php?id=' . $doctor['id_dokter'] . '" class="hubungi-dokter">Hubungi Dokter</a>';
                         echo '</div>';

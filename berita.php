@@ -1,26 +1,39 @@
 <?php
-include('db.php');
+// Koneksi ke database
+$servername = "localhost";
+$username = "username"; // ganti dengan username Anda
+$password = "password"; // ganti dengan password Anda
+$dbname = "informatika_medis"; // ganti dengan nama database Anda
+
+// Buat koneksi
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Cek koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
 
 // Query untuk mengambil berita
-$sql = "SELECT id_berita, judul_berita, isi_berita, waktu_berita, gambar FROM berita ORDER BY waktu_berita DESC";
+$sql = "SELECT id_berita, judul_berita, isi_berita, waktu_berita, gambar FROM berita";
 $result = $conn->query($sql);
 
+// Cek apakah ada berita
 if ($result->num_rows > 0) {
-    // Menampilkan data berita
+    // Menampilkan setiap berita
     while($row = $result->fetch_assoc()) {
-        echo '<a href="berita_detail.php?id=' . $row['id_berita'] . '" class="berita-link">
-                <article class="berita-card">
-                    <img src="assets/' . $row['gambar'] . '" alt="Thumbnail">
-                    <div class="berita-content">
-                        <h2>' . $row['judul_berita'] . '</h2>
-                        <p class="berita-date">' . $row['waktu_berita'] . '</p>
-                        <p>' . substr($row['isi_berita'], 0, 150) . '...</p>
-                    </div>
-                </article>
-            </a>';
+        echo '<a href="berita' . $row['id_berita'] . '.html" class="berita-link">';
+        echo '<article class="berita-card">';
+        echo '<img src="assets/' . $row['gambar'] . '" alt="Thumbnail">';
+        echo '<div class="berita-content">';
+        echo '<h2>' . $row['judul_berita'] . '</h2>';
+        echo '<p class="berita-date">' . $row['waktu_berita'] . '</p>';
+        echo '<p>' . substr($row['isi_berita'], 0, 150) . '...</p>'; // menampilkan preview isi berita
+        echo '</div>';
+        echo '</article>';
+        echo '</a>';
     }
 } else {
-    echo "No news available.";
+    echo "Tidak ada berita untuk ditampilkan";
 }
 
 $conn->close();

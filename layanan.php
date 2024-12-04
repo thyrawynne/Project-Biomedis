@@ -1,24 +1,21 @@
 <?php
-// Menghubungkan ke database
-$host = 'localhost';
-$username = 'root'; // Nama pengguna database
-$password = ''; // Password database
-$dbname = 'informatika_medis'; // Nama database
+// Koneksi ke database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "informatika_medis";  // Sesuaikan dengan nama database Anda
 
 // Membuat koneksi
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Mengecek koneksi
+// Cek koneksi
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Koneksi gagal: " . $conn->connect_error);
 }
 
-// Mengambil data layanan dari tabel poli
-$sql = "SELECT * FROM poli";
-$result = $conn->query($sql);
-
-// Memulai sesi untuk login (jika diperlukan)
-session_start();
+// Query untuk mengambil data layanan dari tabel 'poli'
+$query = "SELECT * FROM poli";
+$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -56,23 +53,21 @@ session_start();
       <p>Discover the wide range of health services we offer to cater to your needs.</p>
       <div class="service-cards">
         <?php
-        // Cek apakah ada data layanan
+        // Cek apakah ada data layanan di database
         if ($result->num_rows > 0) {
-            // Output data layanan
-            while($row = $result->fetch_assoc()) {
-                echo '<a href="' . strtolower($row["nama_poli"]) . '.php" class="service-card">';
-                echo '<img src="assets/' . strtolower($row["nama_poli"]) . '.png" alt="' . $row["nama_poli"] . ' Icon">';
-                echo '<h3>' . $row["nama_poli"] . '</h3>';
-                echo '</a>';
-            }
+          // Menampilkan setiap layanan
+          while($row = $result->fetch_assoc()) {
+            // Menampilkan setiap layanan dalam format kartu
+            echo '<a href="' . $row['link'] . '" class="service-card">';
+            echo '<img src="assets/' . $row['image'] . '" alt="' . $row['name'] . ' Icon">';  // Ganti 'image' dan 'name' dengan nama kolom yang ada di tabel
+            echo '<h3>' . $row['name'] . '</h3>';  // Ganti 'name' dengan nama kolom yang ada di tabel
+            echo '</a>';
+          }
         } else {
-            echo "<p>No services available.</p>";
+          echo '<p>No services available at the moment.</p>';
         }
-
-        // Menutup koneksi
-        $conn->close();
         ?>
-      </div>
+      </div>      
     </section>
   </div>
 
@@ -91,3 +86,8 @@ session_start();
   </footer>
 </body>
 </html>
+
+<?php
+// Menutup koneksi database
+$conn->close();
+?>
