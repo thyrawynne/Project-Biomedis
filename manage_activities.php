@@ -10,13 +10,16 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Fetch activities from the database
-$sql = "SELECT * FROM activities ORDER BY activity_date DESC";
+$sql = "SELECT activities.id_activity, activities.user_id, activities.activity, activities.status, activities.activity_date, users.username 
+        FROM activities 
+        JOIN users ON activities.user_id = users.id_user 
+        ORDER BY activities.activity_date DESC";
 $result = mysqli_query($conn, $sql);
 
 // Handle activity deletion
 if (isset($_GET['delete'])) {
-    $activity = $_GET['delete'];
-    $delete_sql = "DELETE FROM activities WHERE activity = $activity";
+    $activity_id = $_GET['delete'];
+    $delete_sql = "DELETE FROM activities WHERE id_activity = $activity_id";
     if (mysqli_query($conn, $delete_sql)) {
         echo "Activity deleted successfully.";
         header("Location: manage_activities.php");
@@ -66,7 +69,7 @@ if (isset($_GET['delete'])) {
                 <?php while ($activity = mysqli_fetch_assoc($result)) { ?>
                     <tr>
                         <td><?php echo $activity['id_activity']; ?></td>
-                        <td><?php echo $activity['user_id']; ?></td>
+                        <td><?php echo $activity['username']; ?></td> <!-- Displaying username from users table -->
                         <td><?php echo $activity['activity']; ?></td>
                         <td><?php echo $activity['status']; ?></td>
                         <td><?php echo $activity['activity_date']; ?></td>
