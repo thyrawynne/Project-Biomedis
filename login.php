@@ -1,77 +1,89 @@
 <?php
+// Mulai sesi
 session_start();
 
 // Koneksi ke database
-$host = 'localhost';
-$dbname = 'informatika_medis'; // Ganti dengan nama database Anda
-$username = 'root';            // Ganti jika user MySQL berbeda
-$password = '';                // Ganti jika ada password untuk user MySQL Anda
+$host = "localhost";
+$username_db = "root"; // Ubah sesuai konfigurasi server Anda
+$password_db = ""; // Ubah sesuai konfigurasi server Anda
+$database = "informatika_medis";
 
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Koneksi gagal: " . $e->getMessage());
+$conn = new mysqli($host, $username_db, $password_db, $database);
+
+// Periksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
 }
 
-// Proses login
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $inputUsername = $_POST['username'];
-    $inputPassword = $_POST['password'];
+// Periksa apakah form telah dikirim
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    // Periksa login sebagai admin
-    $stmtAdmin = $conn->prepare('SELECT * FROM admin WHERE username = :username');
-    $stmtAdmin->bindParam(':username', $inputUsername);
-    $stmtAdmin->execute();
-    $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
+    // Validasi input
+    if (!empty($username) && !empty($password)) {
+        // Query untuk memeriksa apakah username dan password cocok
+        $query = "SELECT * FROM admin WHERE username = ? AND password = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($admin && $admin['password'] === $inputPassword) {
-        $_SESSION['admin_id'] = $admin['id_admin'];
-        $_SESSION['username'] = $admin['username'];
-        header('Location: admin_dashboard.php');
-        exit();
+        if ($result->num_rows > 0) {
+            // Login berhasil, simpan informasi ke sesi
+            $user = $result->fetch_assoc();
+            $_SESSION['user_id'] = $user['id_admin'];
+            $_SESSION['username'] = $user['username'];
+
+            // Redirect ke dashboard
+            header("Location: user_dashboard.php");
+            exit();
+        } else {
+            // Login gagal
+            $error_message = "Username atau password salah.";
+        }
+    } else {
+        $error_message = "Harap isi username dan password.";
     }
-
-    // Periksa login sebagai user
-    $stmtUser = $conn->prepare('SELECT * FROM user WHERE username = :username');
-    $stmtUser->bindParam(':username', $inputUsername);
-    $stmtUser->execute();
-    $user = $stmtUser->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && $user['password'] === $inputPassword) {
-        $_SESSION['user_id'] = $user['id_user'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['full_name'] = $user['full_name'];
-        header('Location: user_dashboard.php');
-        exit();
-    }
-
-    // Jika login gagal
-    $error = "Username atau password salah.";
 }
+
+$conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Mediva Hospital</title>
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <form action="login.php" method="POST">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" required>
-        
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        
-        <button type="submit">Login</button>
-        
-        <?php if (isset($error)): ?>
-            <p style="color: red;"><?= $error ?></p>
-        <?php endif; ?>
-    </form>
+    <div class="main-container">
+        <div class="login-section">
+            <div class="header">
+                <h2>Welcome to Mediva Hospital</h2>
+                <p>Please enter your username and password</p>
+            </div>
+            <form class="login-form" method="POST" action="">
+                <label for="username">Username</label>
+                <div class="input-container">
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required />
+                    <div class="underline"></div>
+                </div>
+                <label for="password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required />
+                    <div class="underline"></div>
+                </div>
+                <?php if (isset($error_message)): ?>
+                    <p style="color: red; font-size: 0.9em;"><?php echo $error_message; ?></p>
+                <?php endif; ?>
+                <button type="submit" class="login-button">LOGIN</button>
+            </form>
+        </div>
+        <div class="visuals">
+            <img src="./assets/doctor.jpg" alt="Doctor" class="doctor" />
+        </div>
+    </div>
 </body>
 </html>
