@@ -1,9 +1,9 @@
 <?php
 // Menyambung ke database
-include('db.php'); // Gantilah dengan file koneksi database Anda
+include('db.php'); 
 
 // Menarik data admin dari database
-$sql = "SELECT * FROM admin"; // Sesuaikan dengan nama tabel admin Anda
+$sql = "SELECT * FROM admin";
 $result = mysqli_query($conn, $sql);
 $adminData = mysqli_fetch_assoc($result);
 
@@ -13,7 +13,7 @@ $userCountResult = mysqli_query($conn, $userCountSql);
 $userCountData = mysqli_fetch_assoc($userCountResult);
 
 // Query untuk menghitung jumlah aktivitas
-$activityCountSql = "SELECT COUNT(*) AS total_activities FROM activities"; // Sesuaikan dengan nama tabel aktivitas
+$activityCountSql = "SELECT COUNT(*) AS total_activities FROM activities"; 
 $activityCountResult = mysqli_query($conn, $activityCountSql);
 $activityCountData = mysqli_fetch_assoc($activityCountResult);
 ?>
