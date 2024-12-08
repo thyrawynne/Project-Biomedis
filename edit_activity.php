@@ -9,41 +9,47 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Handle form submission for editing activity
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id_activity = $_POST['id_activity']; // ID aktivitas yang akan diedit
-    $user_id = $_POST['user_id']; // ID user yang melakukan aktivitas
-    $activity = $_POST['activity']; // Deskripsi aktivitas
-    $status = $_POST['status']; // Status aktivitas
-    $activity_date = $_POST['activity_date']; // Tanggal aktivitas
+// Mengambil id aktivitas dari URL
+if (isset($_GET['id'])) {
+    $activity_id = $_GET['id'];
 
-    // Update data into database
-    $sql = "UPDATE activities SET 
-            user_id = '$user_id', 
-            activity = '$activity', 
-            status = '$status', 
-            activity_date = '$activity_date' 
-            WHERE id_activity = $id_activity";
+    // Query untuk mendapatkan data aktivitas berdasarkan id
+    $sql = "SELECT * FROM activities WHERE id = $activity_id";
+    $result = mysqli_query($conn, $sql);
 
-    if (mysqli_query($conn, $sql)) {
+    // Mengecek apakah data ditemukan
+    if (mysqli_num_rows($result) > 0) {
+        $activity = mysqli_fetch_assoc($result);
+    } else {
+        echo "Activity not found.";
+        exit();
+    }
+} else {
+    echo "No activity selected.";
+    exit();
+}
+
+// Menangani form submit untuk update aktivitas
+if (isset($_POST['submit'])) {
+    $user_id = $_POST['user_id'];
+    $activity = $_POST['activity'];
+    $status = $_POST['status'];
+    $date = $_POST['date'];
+
+    // Query untuk update aktivitas
+    $update_sql = "UPDATE activities SET user_id = '$user_id', activity = '$activity', status = '$status', date = '$date' WHERE id = $activity_id";
+
+    if (mysqli_query($conn, $update_sql)) {
         echo "Activity updated successfully.";
         header("Location: manage_activities.php");
         exit();
     } else {
-        echo "Error: " . mysqli_error($conn);
+        echo "Error updating activity: " . mysqli_error($conn);
     }
 }
 
-// Fetch the existing activity data to populate the form
-if (isset($_GET['id'])) {
-    $id_activity = $_GET['id'];
-    $sql = "SELECT * FROM activities WHERE id_activity = $id_activity";
-    $result = mysqli_query($conn, $sql);
-    $activity_data = mysqli_fetch_assoc($result);
-} else {
-    echo "Activity not found.";
-    exit();
-}
+// Menutup koneksi
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -68,26 +74,25 @@ if (isset($_GET['id'])) {
     <main>
         <h1>Edit Activity</h1>
         
-        <!-- Form for editing activity -->
-        <form action="edit_activity.php" method="POST">
-            <input type="hidden" name="id_activity" value="<?php echo $activity_data['id_activity']; ?>">
-
+        <!-- Form untuk mengedit aktivitas -->
+        <form action="edit_activity.php?id=<?php echo $activity['id']; ?>" method="POST">
             <label for="user_id">User ID:</label>
-            <input type="number" id="user_id" name="user_id" value="<?php echo $activity_data['user_id']; ?>" required>
-
+            <input type="text" id="user_id" name="user_id" value="<?php echo $activity['user_id']; ?>" required>
+            
             <label for="activity">Activity:</label>
-            <textarea id="activity" name="activity" required><?php echo $activity_data['activity']; ?></textarea>
-
+            <textarea id="activity" name="activity" required><?php echo $activity['activity']; ?></textarea>
+            
             <label for="status">Status:</label>
             <select id="status" name="status" required>
-                <option value="completed" <?php echo ($activity_data['status'] == 'completed') ? 'selected' : ''; ?>>Completed</option>
-                <option value="pending" <?php echo ($activity_data['status'] == 'pending') ? 'selected' : ''; ?>>Pending</option>
+                <option value="Pending" <?php if ($activity['status'] == 'Pending') echo 'selected'; ?>>Pending</option>
+                <option value="Completed" <?php if ($activity['status'] == 'Completed') echo 'selected'; ?>>Completed</option>
+                <option value="In Progress" <?php if ($activity['status'] == 'In Progress') echo 'selected'; ?>>In Progress</option>
             </select>
+            
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" value="<?php echo date('Y-m-d', strtotime($activity['date'])); ?>" required>
 
-            <label for="activity_date">Activity Date:</label>
-            <input type="date" id="activity_date" name="activity_date" value="<?php echo $activity_data['activity_date']; ?>" required>
-
-            <button type="submit">Update Activity</button>
+            <button type="submit" name="submit">Update Activity</button>
         </form>
     </main>
 
