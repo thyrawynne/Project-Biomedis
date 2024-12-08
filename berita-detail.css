@@ -1,0 +1,136 @@
+/* Reset dan pengaturan dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #005a87;
+    padding: 15px 30px;
+}
+
+.navbar .logo img {
+    width: 120px;
+}
+
+.navbar .nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.navbar .nav-links li {
+    margin: 0 15px;
+}
+
+.navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    color: #ff6b6b;
+}
+
+.navbar .user-btn {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.navbar .user-btn:hover {
+    background-color: #e64a45;
+}
+
+/* Section Berita Detail */
+.berita-detail {
+    padding: 30px 20px;
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+.berita-detail .container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.berita-detail h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.berita-detail .berita-date {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.berita-detail .berita-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.berita-detail .berita-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Footer */
+.footer {
+    background-color: #005a87;
+    color: #fff;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.footer .footer-logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.footer .footer-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.footer .footer-links li {
+    margin: 0 15px;
+}
+
+.footer .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer .footer-links a:hover {
+    color: #ff6b6b;
+}
+
+.footer p {
+    font-size: 14px;
+    color: #ddd;
+}
