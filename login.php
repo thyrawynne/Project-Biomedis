@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Validasi input
     if (!empty($username) && !empty($password)) {
-        // Query untuk memeriksa apakah username dan password cocok
+        // Query untuk memeriksa apakah username dan password cocok di admin
         $query = "SELECT * FROM admin WHERE username = ? AND password = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("ss", $username, $password);
@@ -30,17 +30,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            // Login berhasil, simpan informasi ke sesi
+            // Login sebagai admin
             $user = $result->fetch_assoc();
             $_SESSION['user_id'] = $user['id_admin'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = 'admin';  // Menandakan bahwa ini adalah admin
 
-            // Redirect ke dashboard
-            header("Location: user_dashboard.php");
+            // Redirect ke dashboard admin
+            header("Location: admin_dashboard.php");
             exit();
         } else {
-            // Login gagal
-            $error_message = "Username atau password salah.";
+            // Query untuk memeriksa apakah username dan password cocok di user
+            $query = "SELECT * FROM user WHERE username = ? AND password = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("ss", $username, $password);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                // Login sebagai user
+                $user = $result->fetch_assoc();
+                $_SESSION['user_id'] = $user['id_user'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = 'user';  // Menandakan bahwa ini adalah user
+
+                // Redirect ke dashboard user
+                header("Location: user_dashboard.php");
+                exit();
+            } else {
+                // Login gagal
+                $error_message = "Username atau password salah.";
+            }
         }
     } else {
         $error_message = "Harap isi username dan password.";
