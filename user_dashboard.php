@@ -23,7 +23,7 @@ if ($conn->connect_error) {
 
 // Ambil informasi pengguna berdasarkan sesi
 $user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM user WHERE id_user = ?"; // Gantilah 'id' dengan 'id_user'
+$query = "SELECT * FROM pasien WHERE id_pasien = ?"; // Menggunakan 'id_pasien' sesuai dengan 'pasien' di pengguna.php
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -40,7 +40,7 @@ if ($result->num_rows > 0) {
 $stmt->close();
 
 // Mengambil riwayat aktivitas pengguna
-$activityQuery = "SELECT * FROM activities WHERE user_id = ? ORDER BY date DESC";
+$activityQuery = "SELECT * FROM riwayat_aktivitas WHERE id_pasien = ? ORDER BY tanggal DESC";
 $activityStmt = $conn->prepare($activityQuery);
 $activityStmt->bind_param("i", $user_id);
 $activityStmt->execute();
@@ -71,7 +71,7 @@ $conn->close();
           <li><a href="berita.php">Berita</a></li>
           <li><a href="doctor.php">Dokter</a></li>
           <li><a href="layanan.php">Layanan</a></li>
-          <li><a href="user_dashboard.php">Pengguna</a></li>
+          <li><a href="user_dashboard.php" class="active">Pengguna</a></li>
         </ul>
         <a href="logout.php" class="user-btn">Logout</a>
       </nav>
@@ -80,14 +80,19 @@ $conn->close();
     <section class="profile-section">
       <div class="profile-container">
         <div class="profile-image">
-          <img src="assets/placeholder.png" alt="Foto Pengguna">
+          <!-- Menampilkan foto profil pengguna, jika ada -->
+          <img src="assets/<?php echo !empty($user['foto']) ? $user['foto'] : 'placeholder.png'; ?>" alt="Foto Pengguna">
         </div>
         <div class="profile-info">
-          <h2><?php echo htmlspecialchars($user['full_name']); ?></h2> <!-- Ganti 'name' dengan 'full_name' -->
-          <p>Email: <?php echo htmlspecialchars($user['email']); ?></p>
-          <p>Nomor Telepon: <?php echo htmlspecialchars($user['phone']); ?></p>
-          <p>Tanggal Lahir: <?php echo htmlspecialchars($user['birthdate']); ?></p>
-          <button class="edit-btn" onclick="window.location.href='edit_profile.php'">Edit Profil</button> <!-- Tambahkan tautan untuk edit profil -->
+          <h2><?php echo htmlspecialchars($user['nama_pasien']); ?></h2>
+          <p>Email: <?php echo htmlspecialchars($user['username']); ?></p>
+          <p>Nomor Telepon: <?php echo htmlspecialchars($user['no_kontak_pasien']); ?></p>
+          <p>Tanggal Lahir: <?php echo date('d M Y', strtotime($user['tgl_lahir'])); ?></p>
+          
+          <!-- Tombol Edit Profil mengarah ke edit_profile.php -->
+          <button class="edit-btn">
+            <a href="edit_profile.php?id=<?php echo $user['id_pasien']; ?>">Edit Profil</a>
+          </button>
         </div>
       </div>
     </section>
@@ -104,16 +109,17 @@ $conn->close();
         </thead>
         <tbody>
           <?php
+          // Menampilkan riwayat aktivitas pengguna
           if ($activityResult->num_rows > 0) {
-            while ($activity = $activityResult->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($activity['date']) . "</td>";
-                echo "<td>" . htmlspecialchars($activity['activity']) . "</td>";
-                echo "<td>" . htmlspecialchars($activity['status']) . "</td>";
-                echo "</tr>";
-            }
+              while($activity = $activityResult->fetch_assoc()) {
+                  echo '<tr>';
+                  echo '<td>' . date('d M Y', strtotime($activity['tanggal'])) . '</td>';
+                  echo '<td>' . htmlspecialchars($activity['aktivitas']) . '</td>';
+                  echo '<td>' . htmlspecialchars($activity['status']) . '</td>';
+                  echo '</tr>';
+              }
           } else {
-            echo "<tr><td colspan='3'>Tidak ada riwayat aktivitas</td></tr>";
+              echo "<tr><td colspan='3'>Tidak ada aktivitas.</td></tr>";
           }
           ?>
         </tbody>
