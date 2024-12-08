@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <header>
         <nav>
             <a href="index.php">Home</a>
-            <a href="manage_user.php">Manage Users</a>
+            <a href="manage_users.php">Manage Users</a>
             <a href="manage_activities.php">Manage Activities</a>
             <a href="logout.php">Logout</a>
         </nav>
