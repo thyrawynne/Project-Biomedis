@@ -16,7 +16,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #005a87;
+    background-color: #ffffff;
     padding: 15px 30px;
 }
 
@@ -34,7 +34,7 @@ body {
 }
 
 .navbar .nav-links a {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     font-size: 16px;
     transition: color 0.3s;
