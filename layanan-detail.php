@@ -50,17 +50,17 @@ $stmt->close();
         <header>
             <nav class="navbar">
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="index.php">
                         <img src="assets/logo.png" alt="MEDIVA Logo">
                     </a>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="berita.html">Berita</a></li>
-                    <li><a href="doctor.html">Dokter</a></li>
-                    <li><a href="layanan.html">Layanan</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="berita.php">Berita</a></li>
+                    <li><a href="doctor.php">Dokter</a></li>
+                    <li><a href="layanan.php">Layanan</a></li>
                 </ul>
-                <a href="pengguna.html" class="user-btn">Pengguna</a>
+                <a href="pengguna.php" class="user-btn">Pengguna</a>
             </nav>
         </header>
 
@@ -83,10 +83,10 @@ $stmt->close();
         <div class="footer-content">
             <img src="assets/logo tanpa font.png" alt="MEDIVA Logo" class="footer-logo">
             <ul class="footer-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="berita.html">Berita</a></li>
-                <li><a href="doctor.html">Dokter</a></li>
-                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="berita.php">Berita</a></li>
+                <li><a href="doctor.php">Dokter</a></li>
+                <li><a href="layanan.php">Layanan</a></li>
             </ul>
             <p>Copyright 2024, MEDIVA Hospital</p>
         </div>
