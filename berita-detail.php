@@ -34,6 +34,10 @@ if (isset($_GET['id'])) {
     } else {
         echo "<p>Berita tidak ditemukan.</p>";
         exit();
+    }
+} else {
+    echo "<p>Id berita tidak ditemukan dalam URL.</p>";
+    exit();
 }
 ?>
 
