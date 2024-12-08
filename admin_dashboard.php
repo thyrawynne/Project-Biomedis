@@ -6,6 +6,16 @@ include('db.php'); // Gantilah dengan file koneksi database Anda
 $sql = "SELECT * FROM admin"; // Sesuaikan dengan nama tabel admin Anda
 $result = mysqli_query($conn, $sql);
 $adminData = mysqli_fetch_assoc($result);
+
+// Query untuk menghitung jumlah pengguna
+$userCountSql = "SELECT COUNT(*) AS total_users FROM user";
+$userCountResult = mysqli_query($conn, $userCountSql);
+$userCountData = mysqli_fetch_assoc($userCountResult);
+
+// Query untuk menghitung jumlah aktivitas
+$activityCountSql = "SELECT COUNT(*) AS total_activities FROM activities"; // Sesuaikan dengan nama tabel aktivitas
+$activityCountResult = mysqli_query($conn, $activityCountSql);
+$activityCountData = mysqli_fetch_assoc($activityCountResult);
 ?>
 
 <!DOCTYPE html>
@@ -42,11 +52,11 @@ $adminData = mysqli_fetch_assoc($result);
     <section class="stats">
       <div class="stat-card">
         <h3>Total Users</h3>
-        <p>120</p> <!-- Query untuk menghitung jumlah pengguna -->
+        <p><?php echo $userCountData['total_users']; ?></p> <!-- Dynamic count of users -->
       </div>
       <div class="stat-card">
         <h3>Total Activities</h3>
-        <p>250</p> <!-- Query untuk menghitung jumlah aktivitas -->
+        <p><?php echo $activityCountData['total_activities']; ?></p> <!-- Dynamic count of activities -->
       </div>
     </section>
 
