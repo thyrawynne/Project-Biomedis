@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     $id_user = $_GET['id'];
 
     // Query to fetch the user details from the database
-    $sql = "SELECT * FROM users WHERE id_user = $id_user";
+    $sql = "SELECT * FROM user WHERE id_user = $id_user";
     $result = mysqli_query($conn, $sql);
 
     // Check if the user exists
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     $role = $_POST['role'];
 
     // Update user details in the database
-    $update_sql = "UPDATE users SET username = '$username', full_name = '$full_name', email = '$email', role = '$role' WHERE id_user = $id_user";
+    $update_sql = "UPDATE user SET username = '$username', full_name = '$full_name', email = '$email', role = '$role' WHERE id_user = $id_user";
 
     if (mysqli_query($conn, $update_sql)) {
         echo "User updated successfully.";

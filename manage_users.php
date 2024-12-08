@@ -10,13 +10,13 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Fetch users from the database
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM user";
 $result = mysqli_query($conn, $sql);
 
 // Handle user deletion
 if (isset($_GET['delete'])) {
     $id_user = $_GET['delete'];
-    $delete_sql = "DELETE FROM users WHERE id_user = $id_user";
+    $delete_sql = "DELETE FROM user WHERE id_user = $id_user";
     if (mysqli_query($conn, $delete_sql)) {
         echo "User deleted successfully.";
         header("Location: manage_user.php");
