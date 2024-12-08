@@ -77,7 +77,7 @@ $conn->close();
     <section class="profile-section">
       <div class="profile-container">
         <div class="profile-image">
-          <!-- Jika gambar profil ada, tampilkan gambar tersebut, jika tidak, gunakan placeholder -->
+          <!-- Menampilkan foto profil pengguna, jika ada -->
           <img src="assets/<?php echo !empty($user_data['foto']) ? $user_data['foto'] : 'placeholder.png'; ?>" alt="Foto Pengguna">
         </div>
         <div class="profile-info">
@@ -85,7 +85,11 @@ $conn->close();
           <p>Email: <?php echo htmlspecialchars($user_data['username']); ?></p>
           <p>Nomor Telepon: <?php echo htmlspecialchars($user_data['no_kontak_pasien']); ?></p>
           <p>Tanggal Lahir: <?php echo date('d M Y', strtotime($user_data['tgl_lahir'])); ?></p>
-          <button class="edit-btn">Edit Profil</button>
+          
+          <!-- Tombol Edit Profil mengarah ke edit_profile.php -->
+          <button class="edit-btn">
+            <a href="edit_profile.php?id=<?php echo $user_data['id_pasien']; ?>">Edit Profil</a>
+          </button>
         </div>
       </div>
     </section>
