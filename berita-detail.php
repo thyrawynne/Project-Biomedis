@@ -1,9 +1,9 @@
 <?php
 // Koneksi ke database
 $servername = "localhost";
-$username = "username"; // ganti dengan username Anda
-$password = "password"; // ganti dengan password Anda
-$dbname = "informatika_medis"; // ganti dengan nama database Anda
+$username = "root";
+$password = "";
+$dbname = "informatika_medis";  // Sesuaikan dengan nama database Anda
 
 // Membuat koneksi
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -13,27 +13,28 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-// Mengambil ID berita dari URL
-$id_berita = isset($_GET['id']) ? $_GET['id'] : 0;
+// Cek apakah id berita ada di URL
+if (isset($_GET['id'])) {
+    $id_berita = $_GET['id'];
 
-// Query untuk mengambil detail berita berdasarkan ID
-$sql = "SELECT id_berita, judul_berita, isi_berita, waktu_berita, gambar FROM berita WHERE id_berita = $id_berita";
-$result = $conn->query($sql);
+    // Query untuk mengambil detail berita berdasarkan id
+    $query = "SELECT id_berita, judul_berita, isi_berita, waktu_berita, gambar FROM berita WHERE id_berita = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id_berita);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// Cek apakah ada berita
-if ($result->num_rows > 0) {
-    // Menampilkan detail berita
-    $row = $result->fetch_assoc();
-    $judul = $row['judul_berita'];
-    $isi = $row['isi_berita'];
-    $waktu = $row['waktu_berita'];
-    $gambar = $row['gambar'];
-} else {
-    echo "Berita tidak ditemukan";
-    exit();
+    // Jika berita ditemukan
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $judul_berita = $row['judul_berita'];
+        $isi_berita = $row['isi_berita'];
+        $waktu_berita = $row['waktu_berita'];
+        $gambar = $row['gambar'];
+    } else {
+        echo "<p>Berita tidak ditemukan.</p>";
+        exit();
 }
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -41,33 +42,38 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berita Detail</title>
+    <title>Detail Berita - MEDIVA</title>
     <link rel="stylesheet" href="berita-detail.css">
 </head>
 <body>
     <header>
+        <!-- Navbar -->
         <nav class="navbar">
             <div class="logo">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="assets/logo.png" alt="MEDIVA Logo">
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="berita.php">Berita</a></li>
-                <li><a href="doctor.html">Dokter</a></li>
-                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="doctor.php">Dokter</a></li>
+                <li><a href="layanan.php">Layanan</a></li>
             </ul>
-            <a href="login.html" class="user-btn">Login</a>
+            <a href="login.php" class="user-btn">Login</a>
         </nav>
     </header>
 
     <section class="berita-detail">
         <div class="container">
-            <h1><?= $judul ?></h1>
-            <p class="berita-date"><?= $waktu ?></p>
-            <img src="assets/<?= $gambar ?>" alt="Gambar Berita">
-            <p><?= nl2br($isi) ?></p> <!-- Menampilkan isi berita -->
+            <h1><?php echo htmlspecialchars($judul_berita); ?></h1>
+            <p class="berita-date"><?php echo date("d F Y", strtotime($waktu_berita)); ?></p>
+            <div class="berita-image">
+                <img src="assets/<?php echo htmlspecialchars($gambar); ?>" alt="Thumbnail">
+            </div>
+            <div class="berita-content">
+                <p><?php echo nl2br(htmlspecialchars($isi_berita)); ?></p>
+            </div>
         </div>
     </section>
 
@@ -75,13 +81,19 @@ $conn->close();
         <div class="footer-content">
             <img src="assets/logo tanpa font.png" alt="MEDIVA Logo" class="footer-logo">
             <ul class="footer-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="berita.php">Berita</a></li>
-                <li><a href="doctor.html">Dokter</a></li>
-                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="doctor.php">Dokter</a></li>
+                <li><a href="layanan.php">Layanan</a></li>
             </ul>
             <p>Copyright 2024, MEDIVA Hospital</p>
         </div>
     </footer>
 </body>
 </html>
+
+<?php
+// Menutup koneksi ke database
+$stmt->close();
+$conn->close();
+?>
