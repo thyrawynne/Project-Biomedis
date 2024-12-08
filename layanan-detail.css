@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.layanan-detail-section {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.layanan-detail-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.layanan-detail-section .layanan-icon {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.layanan-detail-section p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
