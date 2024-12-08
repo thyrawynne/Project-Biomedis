@@ -47,6 +47,31 @@ $stmt->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Profil Pengguna | Mediva Hospital</title>
   <link rel="stylesheet" href="pengguna.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Validasi Form
+    function validateForm() {
+      var email = document.getElementById("email").value;
+      var phone = document.getElementById("phone").value;
+      var birthdate = document.getElementById("birthdate").value;
+      
+      // Validasi email
+      var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        alert("Email tidak valid");
+        return false;
+      }
+      
+      // Validasi nomor telepon
+      var phonePattern = /^[0-9]{10,15}$/;
+      if (!phonePattern.test(phone)) {
+        alert("Nomor telepon tidak valid");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -67,18 +92,24 @@ $stmt->close();
     </header>
 
     <section class="profile-section">
-      <h2>Edit Profil</h2>
-      <form method="POST" action="update_profile.php">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required><br>
+      <h2>Edit Profil Pengguna</h2>
+      <form method="POST" action="update_profile.php" onsubmit="return validateForm()">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Nomor Telepon:</label>
+          <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
+        </div>
 
-        <label for="phone">Nomor Telepon:</label>
-        <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required><br>
+        <div class="form-group">
+          <label for="birthdate">Tanggal Lahir:</label>
+          <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($user['birthdate']); ?>" required>
+        </div>
 
-        <label for="birthdate">Tanggal Lahir:</label>
-        <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($user['birthdate']); ?>" required><br>
-
-        <button type="submit">Update Profil</button>
+        <button type="submit" class="btn-submit">Update Profil</button>
       </form>
     </section>
 

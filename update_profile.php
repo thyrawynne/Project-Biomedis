@@ -37,12 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Eksekusi query
     if ($stmt->execute()) {
-        echo "Profil berhasil diperbarui.";
-        // Anda bisa mengalihkan pengguna ke halaman lain, seperti dashboard pengguna
+        $_SESSION['message'] = "Profil berhasil diperbarui.";
         header("Location: user_dashboard.php");
         exit();
     } else {
-        echo "Terjadi kesalahan: " . $conn->error;
+        $_SESSION['message'] = "Terjadi kesalahan saat memperbarui profil.";
     }
 }
 
