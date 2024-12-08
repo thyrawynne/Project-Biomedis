@@ -64,8 +64,8 @@ $adminData = mysqli_fetch_assoc($result);
         </thead>
         <tbody>
           <?php
-          // Menarik data pengguna dari tabel users
-          $userSql = "SELECT * FROM users";
+          // Menarik data pengguna dari tabel user
+          $userSql = "SELECT * FROM user";
           $userResult = mysqli_query($conn, $userSql);
 
           while ($user = mysqli_fetch_assoc($userResult)) {
