@@ -29,7 +29,7 @@ $result = $conn->query($sql);
     <header>
         <nav class="navbar">
             <div class="logo">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="assets/logo.png" alt="MEDIVA Logo">
                 </a>
             </div>
@@ -39,7 +39,7 @@ $result = $conn->query($sql);
                 <li><a href="doctor.php">Dokter</a></li>
                 <li><a href="layanan.php">Layanan</a></li>
             </ul>
-            <a href="pengguna.html" class="user-btn">Pengguna</a>
+            <a href="pengguna.php" class="user-btn">Pengguna</a>
         </nav>
     </header>
 
