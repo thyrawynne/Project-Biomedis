@@ -6,7 +6,7 @@ $password = ''; // Password database
 $dbname = 'informatika_medis'; // Nama database
 
 // Membuat koneksi
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = new mysqli($host, $username, $password, $dbname);
 
 // Mengecek koneksi
 if ($conn->connect_error) {
@@ -57,7 +57,7 @@ $conn->close();
           <li><a href="berita.php">Berita</a></li>
           <li><a href="doctor.php">Dokter</a></li>
           <li><a href="layanan.php">Layanan</a></li>
-          <li><a href="pengguna.php">Pengguna</a></li>
+          <li><a href="pengguna.php" class="active">Pengguna</a></li>
         </ul>
         <a href="logout.php" class="user-btn">Logout</a>
       </nav>

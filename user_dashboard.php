@@ -64,13 +64,13 @@ $conn->close();
     <header>
       <nav class="navbar">
         <div class="logo">
-          <a href="index.html"><img src="assets/logo.png" alt="MEDIVA Logo"></a>
+          <a href="index.php"><img src="assets/logo.png" alt="MEDIVA Logo"></a>
         </div>
         <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="berita.html">Berita</a></li>
-          <li><a href="doctor.html">Dokter</a></li>
-          <li><a href="layanan.html">Layanan</a></li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="berita.php">Berita</a></li>
+          <li><a href="doctor.php">Dokter</a></li>
+          <li><a href="layanan.php">Layanan</a></li>
           <li><a href="user_dashboard.php">Pengguna</a></li>
         </ul>
         <a href="logout.php" class="user-btn">Logout</a>
@@ -124,10 +124,10 @@ $conn->close();
       <div class="footer-content">
         <img src="assets/logo tanpa font.png" alt="MEDIVA Logo" class="footer-logo">
         <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="berita.html">Berita</a></li>
-          <li><a href="doctor.html">Dokter</a></li>
-          <li><a href="layanan.html">Layanan</a></li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="berita.php">Berita</a></li>
+          <li><a href="doctor.php">Dokter</a></li>
+          <li><a href="layanan.php">Layanan</a></li>
         </ul>
         <p>Copyright 2024, MEDIVA Hospital</p>
       </div>
