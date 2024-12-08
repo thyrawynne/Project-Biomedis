@@ -13,17 +13,28 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Menyusun query untuk mengambil data profil pengguna
-// Asumsikan session sudah dimulai untuk mendapatkan ID pengguna yang login
+// Mulai sesi
 session_start();
-$user_id = $_SESSION['user_id']; // ID pengguna yang login, misalnya disimpan dalam sesi
 
-$sql_user = "SELECT * FROM pasien WHERE id_pasien = $user_id";
-$result_user = $conn->query($sql_user);
+// Pastikan ID pengguna ada dalam sesi
+if (!isset($_SESSION['user_id'])) {
+    echo "Silakan login terlebih dahulu.";
+    exit;
+}
 
-// Menyusun query untuk mengambil riwayat aktivitas pengguna
-$sql_activity = "SELECT * FROM riwayat_aktivitas WHERE id_pasien = $user_id ORDER BY tanggal DESC";
-$result_activity = $conn->query($sql_activity);
+$user_id = $_SESSION['user_id']; // ID pengguna yang login
+
+// Mengambil data profil pengguna dengan prepared statement
+$sql_user = $conn->prepare("SELECT * FROM pasien WHERE id_pasien = ?");
+$sql_user->bind_param("i", $user_id);
+$sql_user->execute();
+$result_user = $sql_user->get_result();
+
+// Mengambil riwayat aktivitas pengguna
+$sql_activity = $conn->prepare("SELECT * FROM riwayat_aktivitas WHERE id_pasien = ? ORDER BY tanggal DESC");
+$sql_activity->bind_param("i", $user_id);
+$sql_activity->execute();
+$result_activity = $sql_activity->get_result();
 
 // Jika data profil ditemukan
 if ($result_user->num_rows > 0) {
@@ -66,12 +77,13 @@ $conn->close();
     <section class="profile-section">
       <div class="profile-container">
         <div class="profile-image">
-          <img src="assets/placeholder.png" alt="Foto Pengguna">
+          <!-- Jika gambar profil ada, tampilkan gambar tersebut, jika tidak, gunakan placeholder -->
+          <img src="assets/<?php echo !empty($user_data['foto']) ? $user_data['foto'] : 'placeholder.png'; ?>" alt="Foto Pengguna">
         </div>
         <div class="profile-info">
-          <h2><?php echo $user_data['nama_pasien']; ?></h2>
-          <p>Email: <?php echo $user_data['username']; ?></p>
-          <p>Nomor Telepon: <?php echo $user_data['no_kontak_pasien']; ?></p>
+          <h2><?php echo htmlspecialchars($user_data['nama_pasien']); ?></h2>
+          <p>Email: <?php echo htmlspecialchars($user_data['username']); ?></p>
+          <p>Nomor Telepon: <?php echo htmlspecialchars($user_data['no_kontak_pasien']); ?></p>
           <p>Tanggal Lahir: <?php echo date('d M Y', strtotime($user_data['tgl_lahir'])); ?></p>
           <button class="edit-btn">Edit Profil</button>
         </div>
@@ -95,8 +107,8 @@ $conn->close();
               while($activity = $result_activity->fetch_assoc()) {
                   echo '<tr>';
                   echo '<td>' . date('d M Y', strtotime($activity['tanggal'])) . '</td>';
-                  echo '<td>' . $activity['aktivitas'] . '</td>';
-                  echo '<td>' . $activity['status'] . '</td>';
+                  echo '<td>' . htmlspecialchars($activity['aktivitas']) . '</td>';
+                  echo '<td>' . htmlspecialchars($activity['status']) . '</td>';
                   echo '</tr>';
               }
           } else {
