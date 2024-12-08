@@ -28,21 +28,21 @@ $result = $conn->query($query);
 </head>
 <body>
   <header>
-   <!-- Navbar -->
-   <nav class="navbar">
-    <div class="logo">
-      <a href="index.php">
-        <img src="assets/logo.png" alt="MEDIVA Logo">
-      </a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.php">Home</a></li>
-      <li><a href="berita.php" class="active">Berita</a></li>
-      <li><a href="doctor.php">Dokter</a></li>
-      <li><a href="layanan.php">Layanan</a></li>
-    </ul>
-    <a href="login.php" class="user-btn">Login</a>
-  </nav>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.php">
+          <img src="assets/logo.png" alt="MEDIVA Logo">
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="berita.php" class="active">Berita</a></li>
+        <li><a href="doctor.php">Dokter</a></li>
+        <li><a href="layanan.php">Layanan</a></li>
+      </ul>
+      <a href="login.php" class="user-btn">Login</a>
+    </nav>
   </header>
 
   <section class="berita">
@@ -59,14 +59,21 @@ $result = $conn->query($query);
             $isi_berita = $row['isi_berita'];
             $waktu_berita = $row['waktu_berita'];
             $gambar = $row['gambar'];
+
+            // Format tanggal berita
+            $tanggal = date("d F Y", strtotime($waktu_berita));
+
+            // Menampilkan berita
             ?>
             <a href="berita-detail.php?id=<?php echo $id_berita; ?>" class="berita-link">
               <article class="berita-card">
-                <img src="assets/<?php echo $gambar; ?>" alt="Thumbnail">
+                <!-- Menampilkan gambar berita -->
+                <img src="assets/<?php echo $gambar; ?>" alt="Thumbnail" class="berita-image">
                 <div class="berita-content">
-                  <h2><?php echo $judul_berita; ?></h2>
-                  <p class="berita-date"><?php echo date("d F Y", strtotime($waktu_berita)); ?></p>
-                  <p><?php echo substr($isi_berita, 0, 150) . '...'; ?></p>
+                  <h2><?php echo htmlspecialchars($judul_berita); ?></h2>
+                  <p class="berita-date"><?php echo $tanggal; ?></p>
+                  <!-- Menampilkan cuplikan berita -->
+                  <p><?php echo htmlspecialchars(substr($isi_berita, 0, 150) . '...'); ?></p>
                 </div>
               </article>
             </a>
