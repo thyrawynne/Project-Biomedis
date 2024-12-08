@@ -64,7 +64,7 @@ mysqli_close($conn);
 
     <header>
         <nav>
-            <a href="index.php">Home</a>
+            <a href="admin_dashboard.php">Home</a>
             <a href="manage_users.php">Manage Users</a>
             <a href="manage_activities.php">Manage Activities</a>
             <a href="logout.php">Logout</a>
