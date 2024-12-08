@@ -10,25 +10,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Fetch activities from the database
-$sql = "SELECT activities.id_activity, activities.user_id, activities.activity, activities.status, activities.activity_date, users.username 
-        FROM activities 
-        JOIN users ON activities.user_id = users.id_user 
-        ORDER BY activities.activity_date DESC";
+$sql = "SELECT * FROM activities ORDER BY date DESC";
 $result = mysqli_query($conn, $sql);
 
 // Handle activity deletion
 if (isset($_GET['delete'])) {
-    $activity_id = $_GET['delete'];
-    $delete_sql = "DELETE FROM activities WHERE id_activity = $activity_id";
+    $activity_id = $_GET['delete']; // Use ID activity for deletion
+    $delete_sql = "DELETE FROM activities WHERE id = $activity_id";
+    
     if (mysqli_query($conn, $delete_sql)) {
         echo "Activity deleted successfully.";
         header("Location: manage_activities.php");
         exit();
     } else {
-        echo "Error deleting activity.";
+        echo "Error deleting activity: " . mysqli_error($conn);
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +41,7 @@ if (isset($_GET['delete'])) {
     <header>
         <nav>
             <a href="index.php">Home</a>
-            <a href="manage_user.php">Manage Users</a>
+            <a href="manage_users.php">Manage Users</a>
             <a href="manage_activities.php">Manage Activities</a>
             <a href="logout.php">Logout</a>
         </nav>
@@ -58,7 +55,7 @@ if (isset($_GET['delete'])) {
             <thead>
                 <tr>
                     <th>Activity ID</th>
-                    <th>User</th>
+                    <th>User ID</th>
                     <th>Activity</th>
                     <th>Status</th>
                     <th>Activity Date</th>
@@ -66,19 +63,26 @@ if (isset($_GET['delete'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php while ($activity = mysqli_fetch_assoc($result)) { ?>
-                    <tr>
-                        <td><?php echo $activity['id_activity']; ?></td>
-                        <td><?php echo $activity['username']; ?></td> <!-- Displaying username from users table -->
-                        <td><?php echo $activity['activity']; ?></td>
-                        <td><?php echo $activity['status']; ?></td>
-                        <td><?php echo $activity['activity_date']; ?></td>
-                        <td>
-                            <a href="edit_activity.php?id=<?php echo $activity['id_activity']; ?>">Edit</a> |
-                            <a href="?delete=<?php echo $activity['id_activity']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                        </td>
-                    </tr>
-                <?php } ?>
+                <?php
+                // Check if the query was successful
+                if ($result && mysqli_num_rows($result) > 0) {
+                    while ($activity = mysqli_fetch_assoc($result)) {
+                        echo '<tr>';
+                        echo '<td>' . $activity['id'] . '</td>';
+                        echo '<td>' . $activity['user_id'] . '</td>';
+                        echo '<td>' . $activity['activity'] . '</td>';
+                        echo '<td>' . $activity['status'] . '</td>';
+                        echo '<td>' . date('d M Y', strtotime($activity['date'])) . '</td>';
+                        echo '<td>';
+                        echo '<a href="edit_activity.php?id=' . $activity['id'] . '">Edit</a> | ';
+                        echo '<a href="?delete=' . $activity['id'] . '" onclick="return confirm(\'Are you sure?\')">Delete</a>';
+                        echo '</td>';
+                        echo '</tr>';
+                    }
+                } else {
+                    echo "<tr><td colspan='6'>No activities found.</td></tr>";
+                }
+                ?>
             </tbody>
         </table>
 
