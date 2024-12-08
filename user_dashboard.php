@@ -23,7 +23,7 @@ if ($conn->connect_error) {
 
 // Ambil informasi pengguna berdasarkan sesi
 $user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM users WHERE id = ?";
+$query = "SELECT * FROM user WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
