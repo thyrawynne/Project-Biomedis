@@ -34,10 +34,10 @@ $result = $conn->query($sql);
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="berita.html">Berita</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="berita.php">Berita</a></li>
                 <li><a href="doctor.php">Dokter</a></li>
-                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="layanan.php">Layanan</a></li>
             </ul>
             <a href="pengguna.html" class="user-btn">Pengguna</a>
         </nav>
