@@ -41,7 +41,7 @@ $result = $conn->query($query);
         <li><a href="doctor.php">Dokter</a></li>
         <li><a href="layanan.php">Layanan</a></li>
       </ul>
-      <a href="login.php" class="user-btn">Login</a>
+      <a href="pengguna.php" class="user-btn">Pengguna</a>
     </nav>
   </header>
 
