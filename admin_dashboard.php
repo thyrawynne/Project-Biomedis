@@ -1,6 +1,6 @@
 <?php
 // Menyambung ke database
-include('db_connect.php'); // Gantilah dengan file koneksi database Anda
+include('db.php'); // Gantilah dengan file koneksi database Anda
 
 // Menarik data admin dari database
 $sql = "SELECT * FROM admin"; // Sesuaikan dengan nama tabel admin Anda
