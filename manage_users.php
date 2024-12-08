@@ -9,8 +9,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Fetch user from the database
-$sql = "SELECT * FROM user";
+// Fetch users from the database
+$sql = "SELECT * FROM users";
 $result = mysqli_query($conn, $sql);
 
 // Handle user deletion
@@ -41,7 +41,7 @@ if (isset($_GET['delete'])) {
     <header>
         <nav>
             <a href="admin_dashboard.php">Home</a>
-            <a href="manage_user.php">Manage Users</a>
+            <a href="manage_users.php">Manage Users</a>
             <a href="manage_activities.php">Manage Activities</a>
             <a href="logout.php">Logout</a>
         </nav>
@@ -57,6 +57,8 @@ if (isset($_GET['delete'])) {
                     <th>ID</th>
                     <th>Username</th>
                     <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -66,9 +68,11 @@ if (isset($_GET['delete'])) {
                         <td><?php echo $user['id_user']; ?></td>
                         <td><?php echo $user['username']; ?></td>
                         <td><?php echo $user['full_name']; ?></td>
+                        <td><?php echo $user['email']; ?></td>
+                        <td><?php echo $user['role']; ?></td>
                         <td>
                             <a href="edit_user.php?id=<?php echo $user['id_user']; ?>">Edit</a> |
-                            <a href="?delete=<?php echo $user['id_user']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                            <a href="?delete=<?php echo $user['id_user']; ?>" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>
