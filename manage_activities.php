@@ -15,8 +15,8 @@ $result = mysqli_query($conn, $sql);
 
 // Handle activity deletion
 if (isset($_GET['delete'])) {
-    $id_activity = $_GET['delete'];
-    $delete_sql = "DELETE FROM activities WHERE id_activity = $id_activity";
+    $activity = $_GET['delete'];
+    $delete_sql = "DELETE FROM activities WHERE activity = $activity";
     if (mysqli_query($conn, $delete_sql)) {
         echo "Activity deleted successfully.";
         header("Location: manage_activities.php");
