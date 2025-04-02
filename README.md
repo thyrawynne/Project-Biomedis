@@ -23,8 +23,3 @@ Fitur Utama:
         Pengelolaan Data Dokter.
         Pengelolaan Jadwal Dokter.
         Pengelolaan Rekam Medis Pasien.
-
-    Teknologi yang kami pakai:
-    Front End: 
-    Back End: 
-    Database: 
